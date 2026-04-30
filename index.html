@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AF Studios — Website Proposal</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f0ede6;
+    --gold: #d4a84c;
+    --gold-light: #f0c96a;
+    --muted: #a8a298;
+    --card-bg: #131210;
+    --border: rgba(201,168,76,0.2);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.4;
+  }
+
+  /* HEADER */
+  header {
+    padding: 2rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    animation: fadeDown 0.8s ease both;
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+  }
+
+  .logo span { color: var(--white); }
+
+  .badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 0.4rem 1rem;
+    text-transform: uppercase;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 6rem 3rem 4rem;
+    max-width: 900px;
+    animation: fadeUp 1s ease 0.2s both;
+  }
+
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3.5rem, 9vw, 7rem);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    margin-bottom: 2rem;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: #c8c2b8;
+    max-width: 560px;
+    line-height: 1.7;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    margin: 0 3rem;
+    opacity: 0.4;
+  }
+
+  /* STAT BAR */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 1px solid var(--border);
+    animation: fadeUp 1s ease 0.4s both;
+  }
+
+  .stat {
+    padding: 3rem;
+    border-right: 1px solid var(--border);
+  }
+
+  .stat:last-child { border-right: none; }
+
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* SECTION */
+  section {
+    padding: 5rem 3rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .section-tag::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.4;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    letter-spacing: 0.03em;
+    margin-bottom: 3rem;
+    line-height: 1;
+  }
+
+  /* FEATURES GRID */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .feature-card {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    transition: background 0.3s;
+  }
+
+  .feature-card:hover { background: #1a1814; }
+
+  .feature-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .feature-title {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    color: var(--white);
+  }
+
+  .feature-desc {
+    font-size: 0.88rem;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* COMPARISON TABLE */
+  .comparison {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .compare-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .compare-row:last-child { border-bottom: none; }
+
+  .compare-cell {
+    padding: 1.4rem 2rem;
+    font-size: 0.92rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .compare-header {
+    background: #0f0e0c;
+  }
+
+  .compare-header .compare-cell {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .compare-header .compare-cell.highlight-col {
+    background: rgba(201,168,76,0.08);
+    color: var(--gold);
+  }
+
+  .compare-cell.highlight-col {
+    background: rgba(201,168,76,0.05);
+    color: var(--gold-light);
+    font-weight: 500;
+  }
+
+  .check { color: #4caf7d; font-size: 1.1rem; }
+  .cross { color: #c0392b; font-size: 1rem; }
+  .neutral { color: var(--muted); }
+
+  /* PRICING */
+  .pricing-card {
+    background: var(--card-bg);
+    border: 1px solid var(--gold);
+    padding: 3.5rem;
+    max-width: 600px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pricing-card::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%);
+  }
+
+  .price-tag {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    color: var(--gold);
+    line-height: 1;
+    margin: 1rem 0 0.25rem;
+  }
+
+  .price-sub {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .price-includes {
+    list-style: none;
+    margin-bottom: 2.5rem;
+  }
+
+  .price-includes li {
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.92rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .price-includes li:last-child { border-bottom: none; }
+
+  .price-includes li::before {
+    content: '→';
+    color: var(--gold);
+    font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+
+  .savings-callout {
+    background: rgba(201,168,76,0.1);
+    border-left: 3px solid var(--gold);
+    padding: 1rem 1.5rem;
+    font-size: 0.9rem;
+    color: var(--gold-light);
+    margin-top: 1.5rem;
+  }
+
+  /* PROCESS */
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .step {
+    background: var(--card-bg);
+    padding: 2.5rem 2rem;
+    position: relative;
+  }
+
+  .step-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4rem;
+    color: rgba(201,168,76,0.15);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .step-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .step-desc {
+    font-size: 0.83rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 6rem 3rem;
+    text-align: center;
+    background: linear-gradient(to bottom, var(--black), #0f0d0a);
+    animation: fadeUp 1s ease both;
+  }
+
+  .cta-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    margin-bottom: 1rem;
+    letter-spacing: 0.02em;
+  }
+
+  .cta-section p {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .cta-contact {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .contact-line {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .contact-value {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--white);
+  }
+
+  .cta-btn {
+    display: inline-block;
+    margin-top: 2.5rem;
+    padding: 1.1rem 3rem;
+    background: var(--gold);
+    color: var(--black);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .cta-btn:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.08em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .animate-on-scroll.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (max-width: 700px) {
+    header, .hero, section, footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .stats { grid-template-columns: 1fr; }
+    .stat { border-right: none; border-bottom: 1px solid var(--border); }
+    .compare-row { grid-template-columns: 1.5fr 1fr 1fr; }
+    .compare-cell { padding: 1rem; font-size: 0.82rem; }
+    .cta-section { padding: 4rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">AF<span> Studios</span></div>
+  <div class="badge">Website Proposal</div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-label">// Exclusive offer for local businesses</div>
+  <h1>Your Business<em>Deserves Better.</em></h1>
+  <p class="hero-sub">Most agencies will charge you thousands. We build modern, high-converting websites for a fraction of the cost — without cutting corners on quality.</p>
+</div>
+
+<!-- STATS -->
+<div class="stats animate-on-scroll">
+  <div class="stat">
+    <div class="stat-number">50%+</div>
+    <div class="stat-label">cheaper than industry average</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">$300</div>
+    <div class="stat-label">starting price — one-time fee</div>
+  </div>
+  <div class="stat">
+    <div class="stat-number">1–2</div>
+    <div class="stat-label">day delivery turnaround</div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="animate-on-scroll">
+  <div class="section-tag">What you get</div>
+  <div class="section-title">Modern Features.<br>Real Results.</div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📱</div>
+      <div class="feature-title">Mobile-First Design</div>
+      <div class="feature-desc">Over 60% of customers browse on their phone. Your site will look flawless on every screen size.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <div class="feature-title">Fast Load Speed</div>
+      <div class="feature-desc">Slow sites lose customers. We build lean, optimized pages that load in under 2 seconds.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔍</div>
+      <div class="feature-title">SEO Ready</div>
+      <div class="feature-desc">Built with Google in mind — proper meta tags, structured data, and clean code so you rank higher.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📞</div>
+      <div class="feature-title">Lead Capture</div>
+      <div class="feature-desc">Contact forms, click-to-call buttons, and booking integrations that turn visitors into paying customers.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎨</div>
+      <div class="feature-title">Custom Branding</div>
+      <div class="feature-desc">No templates. Every site is built to match your brand's colors, fonts, and personality.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <div class="feature-title">SSL & Security</div>
+      <div class="feature-desc">HTTPS encryption, secure hosting setup, and protection from common vulnerabilities — included.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <div class="feature-title">Analytics Integration</div>
+      <div class="feature-desc">Google Analytics connected so you can track who visits, where they come from, and what they do.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🛠️</div>
+      <div class="feature-title">Post-Launch Support</div>
+      <div class="feature-desc">30 days of free edits and support after launch. We don't disappear once the site goes live.</div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="animate-on-scroll">
+  <div class="section-tag">Why us</div>
+  <div class="section-title">Us vs. The Industry.</div>
+  <div class="comparison">
+    <div class="compare-row compare-header">
+      <div class="compare-cell">Feature</div>
+      <div class="compare-cell highlight-col">AF Studios</div>
+      <div class="compare-cell">Typical Agency</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell">Price</div>
+      <div class="compare-cell highlight-col">$300 – $500</div>
+      <div class="compare-cell neutral">$1,000 – $5,000+</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell">Custom Design (no templates)</div>
+      <div class="compare-cell highlight-col"><span class="check">✓</span></div>
+      <div class="compare-cell"><span class="cross">✗</span> often templates</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell">Mobile Responsive</div>
+      <div class="compare-cell highlight-col"><span class="check">✓</span></div>
+      <div class="compare-cell"><span class="check">✓</span> sometimes</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell">SEO Optimization</div>
+      <div class="compare-cell highlight-col"><span class="check">✓</span> included</div>
+      <div class="compare-cell neutral">extra cost</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell">Turnaround Time</div>
+      <div class="compare-cell highlight-col">1–2 days</div>
+      <div class="compare-cell neutral">4–12 weeks</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell">Direct Communication</div>
+      <div class="compare-cell highlight-col"><span class="check">✓</span> always</div>
+      <div class="compare-cell"><span class="cross">✗</span> account managers</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell">Post-Launch Support (30 days)</div>
+      <div class="compare-cell highlight-col"><span class="check">✓</span> free</div>
+      <div class="compare-cell neutral">billed hourly</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="animate-on-scroll">
+  <div class="section-tag">Pricing</div>
+  <div class="section-title">Simple. Transparent.</div>
+  <div class="pricing-card">
+    <div class="section-tag" style="margin-bottom:0.5rem;">Standard Package</div>
+    <div class="price-tag">$300–$500</div>
+    <div class="price-sub">One-time payment. No monthly fees. 1–2 day delivery.</div>
+    <ul class="price-includes">
+      <li>Up to 5 custom-designed pages</li>
+      <li>Mobile & tablet responsive layout</li>
+      <li>Contact form + click-to-call integration</li>
+      <li>SEO setup & Google Analytics</li>
+      <li>SSL certificate & secure hosting setup</li>
+      <li>Social media link integration</li>
+      <li>30-day post-launch edit support</li>
+      <li>Full ownership — your site, your files</li>
+    </ul>
+    <div class="savings-callout">
+      💡 The average small business web agency charges $1,200–$3,000 for this same package. You save over <strong>50%</strong> — without sacrificing quality.
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="animate-on-scroll">
+  <div class="section-tag">How it works</div>
+  <div class="section-title">From Zero to Live<br>in 1–2 Days.</div>
+  <div class="process-steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title">Discovery Call</div>
+      <div class="step-desc">We learn your business goals, target customers, and what makes you stand out.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-title">Design & Build</div>
+      <div class="step-desc">We design and develop your site using modern tools, tailored to your brand.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title">Your Feedback</div>
+      <div class="step-desc">We send you a preview. You request any changes — we handle revisions quickly.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-title">Go Live</div>
+      <div class="step-desc">Your site launches. We stick around 30 days for any tweaks you need.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section animate-on-scroll">
+  <h2>Ready to Get<br><span style="color:var(--gold)">More Customers?</span></h2>
+  <p>Let's talk about what your business needs. No pressure, no obligation.</p>
+  <div class="cta-contact">
+    <span class="contact-line">Reach out to AF Studios</span>
+    <span class="contact-value">aftch10@gmail.com</span>
+  </div>
+  <br>
+  <a class="cta-btn" href="mailto:aftch10@gmail.com">Get Your Free Quote</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>AF STUDIOS © 2026</span>
+  <span>Professional Web Design — Michigan</span>
+</footer>
+
+<script>
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
